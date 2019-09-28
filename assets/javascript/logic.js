@@ -109,7 +109,7 @@ $("#add-player").on("click", function (event) {
 
     //database.ref(dbRefPathAddPlayers + "Player1/").onDisconnect().remove();
 
-    database.ref(dbRefPathAddPlayers + "GameStatus").set({
+    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
 
       status: "Ready for service!"
     });
