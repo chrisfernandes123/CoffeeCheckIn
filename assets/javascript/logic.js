@@ -71,16 +71,16 @@ var localStorageCodeInput;
 
 
 
-localStorageNameInput = localStorage.getItem("rpsMPnameInput");
-localStorageCodeInput = localStorage.getItem("rpsMPcodeInput");
+// localStorageNameInput = localStorage.getItem("rpsMPnameInput");
+// localStorageCodeInput = localStorage.getItem("rpsMPcodeInput");
 
-if (localStorageNameInput !== null) {
-  $("#name-input").val(localStorageNameInput);
-}
+// if (localStorageNameInput !== null) {
+//   $("#name-input").val(localStorageNameInput);
+// }
 
-if (localStorageCodeInput !== null) {
-  $("#code-input").val(localStorageCodeInput);
-}
+// if (localStorageCodeInput !== null) {
+//   $("#code-input").val(localStorageCodeInput);
+// }
 
 // Create a variable to reference the database.
 var database = firebase.database();
@@ -93,7 +93,7 @@ database.ref(dbRefPathAddPlayers).on("value", function (snapshot) {
 
   if (snapshot.child("Player1").exists()) {
 
-    $("#p1name").html(databaseObject.Player1.name);
+    //$("#p1name").html(databaseObject.Player1.name);
 
     database.ref(dbRefPathAddPlayers + "GameStatus/").set({
       status: "Ready for service!"
@@ -101,20 +101,12 @@ database.ref(dbRefPathAddPlayers).on("value", function (snapshot) {
 
   } else {
 
-    $("#p1name").html("Server not logged in.");
+    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
+      status: "Server not logged in."
+    })
 
     database.ref(dbRefPathPlayers + "Player1/").remove();
 
-
-  }
-
-
-
-  if (snapshot.child("Player1").exists()) {
-
-    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
-      status: "Ready for service!"
-    });
   }
 
 });
@@ -137,91 +129,8 @@ database.ref(dbRefPathAddPlayers + "GameStatus/").on("value", function (snapshot
 $("#add-player").on("click", function (event) {
   event.preventDefault();
 
-  // localStorageNameInput = localStorage.getItem("rpsMPnameInput");
-  // localStorageCodeInput = localStorage.getItem("rpsMPcodeInput");
-
-  // if (localStorageNameInput === null) {
-  //   localStorage.setItem("rpsMPnameInput", $("#name-input").val());
-  //   localStorageNameInput = $("#name-input").val();
-
-  // }
-
-  // if (localStorageCodeInput === null) {
-  //   localStorage.setItem("rpsMPcodeInput", $("#code-input").val());
-  //   localStorageNameInput = $("#code-input").val();
-  // }
-
   database.ref(dbRefPathAddPlayers).on("value", function (snapshot) {
     dbObjectAddPlayers = snapshot.val();
-
-
-    // if (snapshot.child("Player1").exists() && bRoundComplete === false) {
-
-    //   getPlayer1Career(dbObjectAddPlayers.Player1.career);
-
-    //   if (snapshot.child("Player2").exists() && bRoundComplete === false) {
-
-    //     getPlayer2Career(dbObjectAddPlayers.Player2.career);
-    //   } else {
-
-    //     var bPlayer2Exists = false;
-    //     if (snapshot.child("Player2").exists()) {
-    //       bPlayer2Exists = true;
-    //     } else {
-    //       bPlayer2Exists = false;
-    //     }
-
-    //     if (bPlayer2Exists === false && $("#name-input").length) {
-
-    //       player2 = $("#name-input").val();
-    //       // player =  player2 ;
-    //       player2Code = $("#code-input").val();
-
-    //       dbRefPathPlayer2Career = dbRefPath + "Career/" + player2 + "|" + player2Code + "/";
-
-    //       $("#instructionsAndConnect").empty();
-
-    //       isPlayer2 = true;
-
-
-
-    //       con.update({
-    //         name: player2
-    //       });
-
-    //       database.ref(dbRefPathAddPlayers + "Player2/").set({
-    //         name: player2,
-    //         key: con.key,
-    //         code: player2Code,
-    //         career: dbRefPathPlayer2Career
-    //       });
-
-    //       // showNewViewer(player2);
-
-
-    //       database.ref(dbRefPathAddPlayers + "Player2/").onDisconnect().remove();
-
-    //       database.ref(dbRefPathAddPlayers + "GameStatus/").set({
-    //         status: "Game in Progress!!"
-    //       });
-
-    //       getPlayer1Career(dbObjectAddPlayers.Player1.career);
-
-    //       getPlayer2Career(dbObjectAddPlayers.Player2.career);
-
-    //     } // If player 2 is  blank
-
-
-    //   }
-    // } else {
-
-    //   var bPlayer1Exists = false;
-    //   if (snapshot.child("Player1").exists()) {
-    //     bPlayer1Exists = true;
-    //   } else {
-    //     bPlayer1Exists = false;
-    //   }
-
 
     var bPlayer1Exists = false;
     if (snapshot.child("Player1").exists()) {
@@ -231,75 +140,23 @@ $("#add-player").on("click", function (event) {
     }
 
 
+    database.ref(dbRefPathAddPlayers + "Player1/").set({
+      name: player1,
+      key: con.key,
+      code: player1Code,
+      career: dbRefPathPlayer1Career
+    });
 
-    //   if (bPlayer1Exists === false) {
+    database.ref(dbRefPathAddPlayers + "Player1/").onDisconnect().remove();
 
-    //     player1 = $("#name-input").val();
-    //     // player =  player1 ;
-    //     player1Code = $("#code-input").val();
+    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
 
-    //     dbRefPathPlayer1Career = dbRefPath + "Career/" + player1 + "|" + player1Code + "/";
-
-    //     $("#instructionsAndConnect").empty();
-
-
-    //     isPlayer1 = true;
-    //     //player1 = databaseObject.Player1.name;
-    //     con.update({
-    //       name: player1
-    //     });
+      status: "Ready for service!"
+    });
 
 
-    //     database.ref(dbRefPathAddPlayers + "Player1/").set({
-    //       name: player1,
-    //       key: con.key,
-    //       code: player1Code,
-    //       career: dbRefPathPlayer1Career
-    //     });
-
-
-
-
-    //       database.ref(dbRefPathAddPlayers + "Player1/").onDisconnect().remove();
-
-    //       database.ref(dbRefPathAddPlayers + "GameStatus/").set({
-
-    //         status: "Player 1 is ready!  Awaiting Player 2 to join..."
-    //       });
-
-    //       database.ref(dbRefPathAddPlayers + "GameStatus/").onDisconnect().remove();
-
-    //       getPlayer1Career(dbObjectRefPathAddPlayers.Player1.career);
-    //       getPlayer2Career(dbObjectRefPathAddPlayers.Player2.career);
-
-
-    //     }
-
-    //   } //if player1 is blank
-
-
-    // });
-
-
-    // $("#player1CareerWinLossCount").html("Career Win: " + 0 + " , Loss:" + 0);
-    // $("#player2CareerWinLossCount").html("Career Win: " + 0 + " , Loss:" + 0);
 
   });
-
-
-  // function showNewViewer(viewerName){
-
-  //   $("#new-viewer").html(viewerName+ " has joined.");
-
-  //   $("#new-viewer-alert").fadeTo(5000, 500).slideUp(500, function(){
-  //   $("#new-viewer").slideUp(500);
-  //   });
-
-
-
-  // }
-
-
 
 
   // --------------------------------------------------------------
