@@ -72,7 +72,7 @@ var localStorageCodeInput;
 // Create a variable to reference the database.
 var database = firebase.database();
 
-database.ref(dbRefPathAddPlayers + "GameStatus/").on("value", function (snapshot) {
+database.ref(dbRefPathAddPlayers + "GameStatus").on("value", function (snapshot) {
   var databaseObject = snapshot.val();
 
   if (snapshot.child("status").exists()) {
@@ -109,7 +109,7 @@ $("#add-player").on("click", function (event) {
 
     //database.ref(dbRefPathAddPlayers + "Player1/").onDisconnect().remove();
 
-    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
+    database.ref(dbRefPathAddPlayers + "GameStatus").set({
 
       status: "Ready for service!"
     });
