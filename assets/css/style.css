@@ -1,0 +1,44 @@
+body {
+   
+    /* IMPORTANT you are in the CSS folder when the CSS is loaded.  You have to go back to the root directory to access the images folder */
+    background-image: url("../images/dust_scratches.png");
+}
+.card{
+   /* letter-spacing: 10px;  */
+    font-family: 'Arial', Times, 'Times New Roman', serif;
+    font-size: 15px;
+    font-weight: normal;
+    padding: 15px 15px 15px 15px;
+}
+
+.cls-connected-viewers{
+    padding: 0px 0px 0px 0px;
+}
+
+#instructions{
+    padding: 0px 0px 0px 0px;
+     font-family: 'Arial', Times, 'Times New Roman', serif;
+     font-size: 15px;
+     font-weight: normal;
+     /* padding: 15px 15px 15px 15px; */
+ }
+
+#add-player{
+    padding: 10px 50px 10px 50px; 
+
+}
+
+.btn{
+     padding: 30px 80px 30px 80px;
+     margin: 15px;
+}
+
+.jumbotron {
+    padding: 5px 0px 5px 0px; 
+    margin: 0px;
+}
+
+/* .img-fluid{
+    height: 60%;
+    width: 60%;
+} */
