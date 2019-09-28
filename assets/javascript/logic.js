@@ -15,20 +15,7 @@ var config = {
   messagingSenderId: "766833466808",
   appId: "1:766833466808:web:77dc635e8560ddbc3b834d",
   measurementId: "G-FXDKCVPD8N"
-  // apiKey: "AIzaSyB-ujSDKh5YP7QcHQkaKqMqXegK2AZXJYM",
-  // authDomain: "rps-multiplayer-252fb.firebaseapp.com",
-  // databaseURL: "https://rps-multiplayer-252fb.firebaseio.com",
-  // projectId: "rps-multiplayer-252fb",
-  // storageBucket: "rps-multiplayer-252fb.appspot.com",
-  // messagingSenderId: "967692116954"
 
-  //Testing Environment - From Chris Fernandes personal project on Firebase. 
-  // apiKey: "AIzaSyB4erVe309t0T4D-EnK2ZoJiqxqvS86aDE",
-  // authDomain: "rps-multiplayer-dev.firebaseapp.com",
-  // databaseURL: "https://rps-multiplayer-dev.firebaseio.com",
-  // projectId: "rps-multiplayer-dev",
-  // storageBucket: "rps-multiplayer-dev.appspot.com",
-  // messagingSenderId: "474940701437"
 
 };
 
@@ -85,33 +72,6 @@ var localStorageCodeInput;
 // Create a variable to reference the database.
 var database = firebase.database();
 
-database.ref(dbRefPathAddPlayers).on("value", function (snapshot) {
-  var databaseObject = snapshot.val();
-  dbObjectRefPathAddPlayers = snapshot.val();
-
-
-
-  if (snapshot.child("Player1").exists()) {
-
-    //$("#p1name").html(databaseObject.Player1.name);
-
-    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
-      status: "Ready for service!"
-    })
-
-  } else {
-
-    database.ref(dbRefPathAddPlayers + "GameStatus/").set({
-      status: "Server not logged in."
-    })
-
-    database.ref(dbRefPathPlayers + "Player1/").remove();
-
-  }
-
-});
-
-
 database.ref(dbRefPathAddPlayers + "GameStatus/").on("value", function (snapshot) {
   var databaseObject = snapshot.val();
 
@@ -132,22 +92,22 @@ $("#add-player").on("click", function (event) {
   database.ref(dbRefPathAddPlayers).on("value", function (snapshot) {
     dbObjectAddPlayers = snapshot.val();
 
-    var bPlayer1Exists = false;
-    if (snapshot.child("Player1").exists()) {
-      bPlayer1Exists = true;
-    } else {
-      bPlayer1Exists = false;
-    }
+    // var bPlayer1Exists = false;
+    // if (snapshot.child("Player1").exists()) {
+    //   bPlayer1Exists = true;
+    // } else {
+    //   bPlayer1Exists = false;
+    // }
 
 
-    database.ref(dbRefPathAddPlayers + "Player1/").set({
-      name: player1,
-      key: con.key,
-      code: player1Code,
-      career: dbRefPathPlayer1Career
-    });
+    // database.ref(dbRefPathAddPlayers + "Player1/").set({
+    //   name: player1,
+    //   key: con.key,
+    //   code: player1Code,
+    //   career: dbRefPathPlayer1Career
+    // });
 
-    database.ref(dbRefPathAddPlayers + "Player1/").onDisconnect().remove();
+    //database.ref(dbRefPathAddPlayers + "Player1/").onDisconnect().remove();
 
     database.ref(dbRefPathAddPlayers + "GameStatus/").set({
 
@@ -173,8 +133,8 @@ $("#add-player").on("click", function (event) {
   var connectedRef = database.ref(".info/connected");
 
 
-  var player1Ref = database.ref(dbRefPathAddPlayers + "Player1/");
-  var player2Ref = database.ref(dbRefPathAddPlayers + "Player2/");
+  // var player1Ref = database.ref(dbRefPathAddPlayers + "Player1/");
+  // var player2Ref = database.ref(dbRefPathAddPlayers + "Player2/");
 
 
   // When the client's connection state changes...
@@ -262,20 +222,20 @@ $("#add-player").on("click", function (event) {
   // ----------------------------------------------------------------
   // At the page load and subsequent value changes, get a snapshot of the local data.
   // This function allows you to update your page in real-time when the values within the firebase node bidderData changes
-  database.ref(dbRefPathPlayers).on("value", function (snapshot) {
+  // database.ref(dbRefPathPlayers).on("value", function (snapshot) {
 
 
-    dbObjectAddPlayers = snapshot.val();
+  //   dbObjectAddPlayers = snapshot.val();
 
-    if (snapshot.child("Player1").child("Name").exists()) {
-      player1 = dbObjectAddPlayers.Player1.name;
-      $("#player1Name").html(player1);
-    }
+  //   if (snapshot.child("Player1").child("Name").exists()) {
+  //     player1 = dbObjectAddPlayers.Player1.name;
+  //     $("#player1Name").html(player1);
+  //   }
 
-    // If any errors are experienced, log them to console.
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
+  //   // If any errors are experienced, log them to console.
+  // }, function (errorObject) {
+  //   console.log("The read failed: " + errorObject.code);
+  // });
 
 
 });
